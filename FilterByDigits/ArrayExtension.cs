@@ -1,4 +1,5 @@
 ﻿using System;
+#pragma warning disable
 
 namespace FilterTask
 {
@@ -16,9 +17,40 @@ namespace FilterTask
         /// <example>
         /// {1, 2, 3, 4, 5, 6, 7, 68, 69, 70, 15, 17}  => { 7, 70, 17 } for digit = 7.
         /// </example>
-        public static int[] FilterByDigit(int[]? source, int digit)
+        public static bool ContainsDigit(int number, int digit)
         {
-            throw new NotImplementedException("You need to implement this function.");
+            string str = number.ToString();
+            return str.Contains(digit.ToString());
+        }
+
+        public static int[] FilterByDigit(int[]? array, int digit)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            if (array.Length == 0)
+            {
+                throw new ArgumentException("Empty");
+            }
+
+            if (digit < 0 || digit > 9)
+            {
+                throw new ArgumentOutOfRangeException(nameof(digit));
+            }
+
+            List<int> result = new List<int>();
+
+            foreach (int number in array)
+            {
+                if (ContainsDigit(number, digit))
+                {
+                    result.Add(number);
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }
